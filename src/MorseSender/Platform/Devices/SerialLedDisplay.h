@@ -1,8 +1,5 @@
 ﻿/*
  * SerialLedDisplay.h
- *
- * Created: 26.07.2012 0:37:42
- *  Author: Альберт
  */ 
 #pragma once
 

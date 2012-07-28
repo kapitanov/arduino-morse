@@ -1,8 +1,5 @@
 ﻿/*
-* Usart.cpp
-*
-* Created: 22.07.2012 15:05:54
-*  Author: Альберт
+* UsartStream.cpp
 */
 
 #include "UsartStream.h"

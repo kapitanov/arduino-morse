@@ -1,8 +1,5 @@
 ﻿/*
  * CPU.cpp
- *
- * Created: 28.07.2012 20:07:05
- *  Author: Альберт
  */ 
 #include "CPU.h"
 

@@ -144,7 +144,7 @@
     <Compile Include="Morse.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Main.cpp">
+    <Compile Include="MorseSender.cpp">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

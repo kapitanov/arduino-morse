@@ -1,8 +1,5 @@
 ﻿/*
  * Pins.h
- *
- * Created: 28.07.2012 19:18:08
- *  Author: Альберт
  */ 
 #pragma once
 

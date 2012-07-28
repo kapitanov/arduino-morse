@@ -1,8 +1,5 @@
 ﻿/*
  * Morse.h
- *
- * Created: 22.07.2012 15:18:06
- *  Author: Альберт
  */ 
 #pragma once
 #include "Platform/Types.h"

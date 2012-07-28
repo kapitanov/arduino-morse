@@ -1,8 +1,5 @@
 ﻿/*
- * Morse.cpp
- *
- * Created: 22.07.2012 15:27:10
- *  Author: Альберт
+ * MorseSender.cpp
  */ 
 
 #include "Morse.h"

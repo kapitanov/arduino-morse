@@ -1,8 +1,5 @@
 ﻿/*
- * Cpu.h
- *
- * Created: 28.07.2012 20:00:25
- *  Author: Альберт
+ * CPU.h
  */ 
 #pragma once
 

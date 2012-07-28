@@ -1,8 +1,5 @@
 ﻿/*
  * Diagnostics.h
- *
- * Created: 28.07.2012 19:49:13
- *  Author: Альберт
  */ 
 #pragma once
 

@@ -1,8 +1,5 @@
 ﻿/*
 * DigitalPinImpl.h
-*
-* Created: 28.07.2012 19:23:07
-*  Author: Альберт
 */
 #pragma once
 

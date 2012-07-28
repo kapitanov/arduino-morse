@@ -1,8 +1,5 @@
 ﻿/*
 * DigitalPinImpl.cpp
-*
-* Created: 28.07.2012 19:26:17
-*  Author: Альберт
 */
 #include "DigitalPin.h"
 #include <avr/io.h>

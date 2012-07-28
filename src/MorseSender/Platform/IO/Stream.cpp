@@ -1,8 +1,5 @@
 ﻿/*
  * Stream.cpp
- *
- * Created: 22.07.2012 17:01:06
- *  Author: Альберт
  */ 
 
 #include "Stream.h"

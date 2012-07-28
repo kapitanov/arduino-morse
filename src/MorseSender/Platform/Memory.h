@@ -1,8 +1,5 @@
 ﻿/*
  * Memory.h
- *
- * Created: 22.07.2012 17:14:02
- *  Author: Альберт
  */ 
 #pragma once
 

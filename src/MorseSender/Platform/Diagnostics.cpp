@@ -1,8 +1,5 @@
 ﻿/*
  * Diagnostics.cpp
- *
- * Created: 28.07.2012 19:50:13
- *  Author: Альберт
  */ 
 #include "Diagnostics.h"
 #include <stdio.h>

@@ -1,8 +1,5 @@
 ﻿/*
  * Digital.h
- *
- * Created: 22.07.2012 21:31:54
- *  Author: Альберт
  */ 
 #pragma once
 
@@ -39,10 +36,8 @@ namespace Platform
 			typedef volatile uint8_t*	Address;
 			
 		private:
-			const Address in_port_;
-			const Address out_port_;
-			const Address ddr_port_;
-			const Bitmask bitmask_;
+			const Pin					pin_;
+			const Bitmask				bitmask_;
 			
 			#ifdef DEBUG
 			

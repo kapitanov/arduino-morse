@@ -1,8 +1,5 @@
 ﻿/*
-* HardwareSerial.h
-*
-* Created: 22.07.2012 16:52:36
-*  Author: Альберт
+* Stream.h
 */
 #pragma once
 

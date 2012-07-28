@@ -1,8 +1,5 @@
 ﻿/*
- * usart.h
- *
- * Created: 22.07.2012 15:01:36
- *  Author: Альберт
+ * UsartStream.h
  */ 
 #pragma once
 

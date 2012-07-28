@@ -1,8 +1,5 @@
 ﻿/*
 * Digital.cpp
-*
-* Created: 22.07.2012 21:36:40
-*  Author: Альберт
 */
 
 #include "DigitalPin.h"
@@ -15,16 +12,12 @@
 using namespace Platform::IO;
 
 DigitalPin::DigitalPin(Pin pin)
-	: in_port_(Platform::Impl::IO::InputPort(pin)),
-	  out_port_(Platform::Impl::IO::OutputPort(pin)),
-	  ddr_port_(Platform::Impl::IO::DdrPort(pin)),
+	: pin_(pin),
 	  bitmask_(Platform::Impl::IO::Bitmask(pin))
 { }
 
 DigitalPin::DigitalPin(Pin pin, PinMode mode)
-	: in_port_(Platform::Impl::IO::InputPort(pin)),
-	  out_port_(Platform::Impl::IO::OutputPort(pin)),
-	  ddr_port_(Platform::Impl::IO::DdrPort(pin)),
+	: pin_(pin),
 	  bitmask_(Platform::Impl::IO::Bitmask(pin))
 {
 	Mode(mode);
@@ -32,13 +25,15 @@ DigitalPin::DigitalPin(Pin pin, PinMode mode)
 
 PinMode DigitalPin::Mode()
 {
-	bool is_ddr_set = Platform::Impl::IO::ReadBit(ddr_port_, bitmask_);
+	Address ddr_port = Platform::Impl::IO::DdrPort(pin_);
+	bool is_ddr_set = Platform::Impl::IO::ReadBit(ddr_port, bitmask_);
 	if(is_ddr_set)
 	{
 		return WRITE;
 	}
 	
-	bool is_out_set = Platform::Impl::IO::ReadBit(out_port_, bitmask_);
+	Address out_port = Platform::Impl::IO::OutputPort(pin_);
+	bool is_out_set = Platform::Impl::IO::ReadBit(out_port, bitmask_);
 	
 	if(is_out_set)
 	{
@@ -50,21 +45,24 @@ PinMode DigitalPin::Mode()
 
 void DigitalPin::Mode(PinMode mode)
 {
+	Address ddr_port = Platform::Impl::IO::DdrPort(pin_);
+	Address out_port = Platform::Impl::IO::OutputPort(pin_);
+	
 	switch(mode)
 	{
 	case READ:
-		Platform::Impl::IO::ClearBit(ddr_port_, bitmask_);
-		Platform::Impl::IO::ClearBit(out_port_, bitmask_);
+		Platform::Impl::IO::ClearBit(ddr_port, bitmask_);
+		Platform::Impl::IO::ClearBit(out_port, bitmask_);
 		break;
 	
 	case WRITE:
-		Platform::Impl::IO::SetBit(ddr_port_, bitmask_);
-		Platform::Impl::IO::ClearBit(out_port_, bitmask_);
+		Platform::Impl::IO::SetBit(ddr_port, bitmask_);
+		Platform::Impl::IO::ClearBit(out_port, bitmask_);
 		break;
 	
 	case READ_PULLUP:
-		Platform::Impl::IO::ClearBit(ddr_port_, bitmask_);
-		Platform::Impl::IO::SetBit(out_port_, bitmask_);
+		Platform::Impl::IO::ClearBit(ddr_port, bitmask_);
+		Platform::Impl::IO::SetBit(out_port, bitmask_);
 		break;
 		
 	default:
@@ -88,13 +86,14 @@ void DigitalPin::Write(DigitalValue value)
 	AssertCanWrite();
 	#endif
 
+	Address out_port = Platform::Impl::IO::OutputPort(pin_);
 	switch (value)
 	{
 		case HIGH:
-			Platform::Impl::IO::SetBit(out_port_, bitmask_);
+			Platform::Impl::IO::SetBit(out_port, bitmask_);
 			break;
 		case LOW:
-			Platform::Impl::IO::ClearBit(out_port_, bitmask_);
+			Platform::Impl::IO::ClearBit(out_port, bitmask_);
 			break;
 	}
 }
@@ -105,23 +104,25 @@ DigitalValue DigitalPin::Read()
 	AssertCanRead();
 	#endif
 	
-	return Platform::Impl::IO::ReadBit(in_port_, bitmask_);
+	Address in_port = Platform::Impl::IO::InputPort(pin_);
+	return Platform::Impl::IO::ReadBit(in_port, bitmask_);
 }
 
 void DigitalPin::Pulse(DigitalValue peak)
 {
+	Address out_port = Platform::Impl::IO::OutputPort(pin_);
 	switch (peak)
 	{
 	case HIGH:
-		Clear();
-		Set();
-		Clear();
+		Platform::Impl::IO::ClearBit(out_port, bitmask_);
+		Platform::Impl::IO::SetBit(out_port, bitmask_);
+		Platform::Impl::IO::ClearBit(out_port, bitmask_);
 		break;
 		
 	case LOW:
-		Set();
-		Clear();
-		Set();
+		Platform::Impl::IO::SetBit(out_port, bitmask_);
+		Platform::Impl::IO::ClearBit(out_port, bitmask_);
+		Platform::Impl::IO::SetBit(out_port, bitmask_);
 		break;
 	}
 }
@@ -132,7 +133,8 @@ void DigitalPin::Toggle()
 	AssertCanWrite();
 	#endif
 		
-	bool state = Platform::Impl::IO::ReadBit(out_port_, bitmask_);
+	Address out_port = Platform::Impl::IO::OutputPort(pin_);
+	bool state = Platform::Impl::IO::ReadBit(out_port, bitmask_);
 	
 	if(state)
 	{

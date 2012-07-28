@@ -1,8 +1,5 @@
 ﻿/*
  * SerialLedDisplay.cpp
- *
- * Created: 26.07.2012 0:40:19
- *  Author: Альберт
  */ 
 
 #include "SerialLedDisplay.h"
