@@ -2,53 +2,31 @@
  * Morse.h
  */ 
 #pragma once
+
 #include "Platform/Types.h"
+#include "Platform/String.h"
 #include <stdio.h>
 
-class Morse
+namespace Morse
 {
-private:
-	Morse() { }
+	extern const Platform::Char LONG;
+	extern const Platform::Char SHORT;
+	extern const Platform::Char SPACE;
+	extern const Platform::Char END;
 	
-public:
-	typedef const uchar Char;
-
-	static Char LONG;
-	static Char SHORT;
-	static Char SPACE;
-	static Char END;
+	extern const size_t MAX_LENGTH;
 	
-	static const size_t MAX_LENGTH;
+	typedef Platform::StaticString<8> Output;
 	
-	class StringIterator;
-	
-	class String
+	enum StringType
 	{
-	public:
-		String();
-		
-		class Iterator
-		{
-		public:
-			bool Next();
-			Char Current();
-			
-		private:
-			friend class String;
-			
-			explicit Iterator(Char* buffer);
-			
-			Char* buffer_;
-			int index_;
-			};
-			
-		String::Iterator GetIterator();
-					
-		void LoadFromAddress(const size_t address);
-		
-	private:
-		Char buffer_[8];
+		TEXT	= 0x00,
+		MORSE	= 0x01
 	};
+	
+	StringType DetermineType(const Platform::String& str);
 
-	static bool Encode(uchar symbol, String& result);
+	bool Encode(uchar symbol, Output& result);
+	
+	bool Decode(const Platform::String& source, Platform::String& result);
 };

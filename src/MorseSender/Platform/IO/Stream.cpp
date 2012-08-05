@@ -39,6 +39,11 @@ void Stream::Send(const uchar* data)
 	}
 }
 
+void Stream::Send(Platform::String& str)
+{
+	Send(str.GetPointer());
+}
+
 uchar Stream::Receive()
 {
 	return ReceiveByte();
@@ -46,15 +51,20 @@ uchar Stream::Receive()
 
 size_t Stream::Receive(uchar* buffer, size_t buffer_len)
 {
-	for(size_t i = 0; i < buffer_len; i++)
+	for(size_t i = 0; i <= buffer_len; i++)
 	{
 		buffer[i] = 0;
 	}
 	
 	size_t index = 0;
-	while(index < buffer_len)
+	while(index <= buffer_len)
 	{
 		uchar symbol = ReceiveByte();
+		if( symbol == '\r')
+		{
+			continue;
+		}
+		
 		if(symbol == '\n')
 		{
 			break;
@@ -65,5 +75,10 @@ size_t Stream::Receive(uchar* buffer, size_t buffer_len)
 	}
 	
 	index--;
-	return index;
+	return index + 1;
+}
+
+size_t Stream::Receive(Platform::String& str)
+{
+	return Receive(str.GetPointer(), str.GetBufferLength());
 }
