@@ -8,9 +8,11 @@
 #include "Platform/CPU.h"
 #include "Platform/Memory.h"
 #include "Platform/String.h"
-#include "Platform/IO/UsartStream.h"
 #include "Platform/Devices/SerialLedDisplay.h"
+#include "Platform/IO/UsartStream.h"
 #include "Platform/IO/DigitalPin.h"
+#include "Platform/IO/RingBuffer.h"
+#include "Platform/IO/HardwareSerial.h"
 #include "Morse.h"
 
 Platform::IO::UsartStream serial(Platform::CPU::GetUbrr());
@@ -37,10 +39,27 @@ void ProcessSymbol(uchar symbol)
 Platform::Devices::SerialLedDisplay led(Platform::IO::D2, Platform::IO::D3);
 Platform::IO::DigitalPin pin(Platform::IO::D7, Platform::IO::WRITE);
 
+Platform::IO::StaticRingBuffer<20> RBuffer;
+
+void test_RingBuffer()
+{
+	Platform::IO::Init();
+	
+	while(true)
+	{
+		while(!Platform::IO::RxBuffer->IsEmpty())
+		{
+			 serial.Send(Platform::IO::RxBuffer->Peek());
+		}
+	}
+}
+
 int main(void)
 {
 	led.Reset();
 	led.Increment();
+	
+	test_RingBuffer();
 	
 	bool state = false;
     while(true)
